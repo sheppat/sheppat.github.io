@@ -11,7 +11,7 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 
 <style>
-.search-bar { width: 100%; max-width: 420px; display: block; margin: 12px auto 20px; padding: 10px 12px; font-size: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); background: rgba(10,10,10,0.6); color: #fff; outline: none; }
+.search-bar { width: 100%; max-width: 420px; display: block; margin: 12px auto 20px; padding: 10px 12px; font-size: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); background: rgba(10,10,10,0.6); color: #fff; outline:none; }
 #admin-box { max-width:920px; margin:14px auto 32px; padding:14px; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08)); border:1px solid rgba(255,255,255,0.02); display:none; }
 #admin-box input, #admin-box textarea, #admin-box button { width:100%; padding:8px 10px; margin:6px 0; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:#fff; }
 #admin-lock { max-width:420px; margin:10px auto 18px; display:flex; gap:8px; }
@@ -44,8 +44,51 @@
 <main>
 <section class="games-hero">
   <div class="container">
-    <h1 class="section-title">Games</h1>
-    <p class="muted">Click a card to open the Roblox page. Stats: Coming Soon.</p>
+    <h1 class="section-title">Games & Tools</h1>
+    <p class="muted">Browse, explore, and play Roblox games directly from our platform. All games include detailed descriptions and safe links. Tools for tracking stats and player insights are coming soon.</p>
+    <p class="muted">Our goal is to provide an organized, secure, and engaging hub for Roblox players of all ages. All features are optimized for desktop and mobile devices.</p>
+  </div>
+</section>
+
+<section class="preview container">
+  <h2 class="section-title">Coming Soon Tools</h2>
+  <div class="preview-grid">
+    <div class="game-card card-3d tilt">
+      <div class="card-media">
+        <img src="images/Placeholder.png" alt="Coming Soon"/>
+      </div>
+      <div class="card-body">
+        <h3>Active Players Tracker</h3>
+        <p>Coming Soon: Monitor live player activity in Roblox games, understand peak times, and track engagement trends.</p>
+        <div class="card-actions">
+          <a class="btn-small disabled" href="#">Coming Soon</a>
+        </div>
+      </div>
+    </div>
+    <div class="game-card card-3d tilt">
+      <div class="card-media">
+        <img src="images/Placeholder.png" alt="Coming Soon"/>
+      </div>
+      <div class="card-body">
+        <h3>Revenue Estimator</h3>
+        <p>Coming Soon: Estimate the revenue of Roblox games and make informed decisions on your gameplay and investments.</p>
+        <div class="card-actions">
+          <a class="btn-small disabled" href="#">Coming Soon</a>
+        </div>
+      </div>
+    </div>
+    <div class="game-card card-3d tilt">
+      <div class="card-media">
+        <img src="images/Placeholder.png" alt="Coming Soon"/>
+      </div>
+      <div class="card-body">
+        <h3>Leaderboard Analytics</h3>
+        <p>Coming Soon: Detailed player rankings, stats, and analytics to improve your gaming performance.</p>
+        <div class="card-actions">
+          <a class="btn-small disabled" href="#">Coming Soon</a>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -65,7 +108,7 @@
       <input id="g-name" placeholder="Game name" />
       <input id="g-img" type="file" accept="image/*" />
     </div>
-    <input id="g-url" placeholder="Game URL (roblox link)" />
+    <input id="g-url" placeholder="Game URL (Roblox link)" />
     <textarea id="g-desc" rows="3" placeholder="Short description"></textarea>
     <div style="display:flex; gap:8px; margin-top:8px;">
       <button id="g-add" class="btn btn-primary">Add Game</button>
@@ -73,8 +116,20 @@
     </div>
     <div id="admin-feedback" style="margin-top:10px;color:#cfeeea;"></div>
   </div>
-
 </section>
+
+<section class="good-to-know container">
+  <h2 class="section-title">Good to Know</h2>
+  <ul>
+    <li>All tools are safe to use — no personal info required. Privacy is guaranteed.</li>
+    <li>Fully optimized for desktop and mobile play.</li>
+    <li>Direct game links are secure and verified for safe access.</li>
+    <li>Our tools and games are continuously updated based on feedback and performance analytics.</li>
+    <li>Bookmark this page to see new games and tools as they are added.</li>
+    <li>Follow our Roblox profile for announcements, tips, and new features.</li>
+  </ul>
+</section>
+
 </main>
 
 <footer class="site-footer">
@@ -126,13 +181,8 @@ function renderGames(filter = '') {
     const card = document.createElement('div');
     card.className = 'game-card card-3d tilt';
     const link = game.url || '#';
-    let imgSrc = game.img || '';
-    
-    // Use local images folder if the img doesn't look like a full URL
-    if (!imgSrc.startsWith('http')) {
-      imgSrc = `images/${imgSrc}`;
-    }
-
+    let imgSrc = game.img || 'images/Placeholder.png';
+    if (!imgSrc.startsWith('http')) imgSrc = `images/${imgSrc}`;
     const desc = game.desc || '';
     card.onclick = () => window.open(link, '_blank');
     card.innerHTML = `
@@ -156,8 +206,6 @@ function renderGames(filter = '') {
     });
   }
 }
-
-
 
 searchInput.addEventListener('input', () => renderGames(searchInput.value.trim()));
 
@@ -228,3 +276,4 @@ function escapeHtml(s = '') { return String(s).replace(/[&<>"']/g, c => ({'&':'&
 </script>
 </body>
 </html>
+

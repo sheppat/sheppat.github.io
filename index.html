@@ -31,13 +31,14 @@
 </header>
 
 <main>
-<section class="hero cinematic">
+<section class="hero cinematic" role="banner">
   <div class="hero-inner">
     <h1 class="hero-title">Explore. Play. Enjoy.</h1>
-    <p class="hero-sub">UsefulUtilities brings you fun Roblox experiences and stats-driven tools for players.</p>
+    <p class="hero-sub">UsefulUtilities brings Roblox players safe, fun, and stats-driven tools to improve gameplay, track progress, and discover new games. Designed for both casual players and developers, our platform emphasizes privacy, performance, and community engagement.</p>
+    <p class="hero-sub" style="margin-top:1em;">We provide dashboards, leaderboards, and real-time insights while ensuring no personal data is shared or sold. All tools are free, mobile-friendly, and updated regularly based on player feedback.</p>
     <div class="hero-cta">
       <a class="btn btn-primary" href="games.html">View Games</a>
-      <a class="btn btn-ghost" href="https://www.roblox.com/users/77313055/profile" target="_blank">Follow on Roblox</a>
+      <a class="btn btn-ghost" href="https://www.roblox.com/users/77313055/profile" target="_blank" rel="noopener">Follow on Roblox</a>
     </div>
   </div>
   <div class="neon-layer neon-1" aria-hidden="true"></div>
@@ -47,19 +48,19 @@
 
 <section class="features">
   <div class="container">
-    <h2 class="section-title">Our Studio</h2>
+    <h2 class="section-title">Why UsefulUtilities?</h2>
     <div class="feature-grid">
       <article class="feature-card tilt">
-        <h3>Dynamic Games</h3>
-        <p>New experiences added frequently. Explore, play, and enjoy multiple Roblox games.</p>
+        <h3>Dynamic Games & Tools</h3>
+        <p>Regularly updated games and tools provide fresh content and fun experiences. Each release is tested for safety, ease of use, and engagement. Track stats, view leaderboards, and explore new mechanics for a complete Roblox experience.</p>
       </article>
       <article class="feature-card tilt">
-        <h3>Community Focus</h3>
-        <p>Feedback-driven development. We build tools and games to help the community thrive.</p>
+        <h3>Community-Focused Development</h3>
+        <p>Your feedback shapes our tools. We listen, update, and optimize features based on user input, ensuring our platform remains relevant, helpful, and exciting for Roblox enthusiasts of all ages.</p>
       </article>
       <article class="feature-card tilt">
-        <h3>SSO & Stats</h3>
-        <p>Track stats and analytics for your favorite Roblox games seamlessly.</p>
+        <h3>Safe, Secure, & Private</h3>
+        <p>All data we collect is anonymized and stored securely. No personal information is sold or shared. Enjoy real-time stats, SSO integration, and insights without compromising your privacy.</p>
       </article>
     </div>
   </div>
@@ -67,14 +68,45 @@
 
 <section class="preview">
   <div class="container">
-    <h2 class="section-title">Games</h2>
+    <h2 class="section-title">Coming Soon Tools</h2>
+    <p class="muted">We’re developing exciting new tools to enhance your Roblox experience. Here's a sneak peek:</p>
+    <div class="preview-grid">
+      <div class="game-preview card-3d tilt">
+        <img src="images/Placeholder.png" alt="Coming Soon" />
+        <div class="preview-meta">
+          <h3>Active Players Tracker</h3>
+          <p>Coming Soon: Track real-time active players in any Roblox game. Useful for monitoring engagement and peak activity periods.</p>
+        </div>
+      </div>
+      <div class="game-preview card-3d tilt">
+        <img src="images/Placeholder.png" alt="Coming Soon" />
+        <div class="preview-meta">
+          <h3>Revenue Estimator</h3>
+          <p>Coming Soon: Estimate game revenue and analytics to make informed decisions and track your favorite games’ growth.</p>
+        </div>
+      </div>
+      <div class="game-preview card-3d tilt">
+        <img src="images/Placeholder.png" alt="Coming Soon" />
+        <div class="preview-meta">
+          <h3>Leaderboard Analytics</h3>
+          <p>Coming Soon: Detailed player stats and rankings to help you compete, improve, and enjoy Roblox more strategically.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="preview">
+  <div class="container">
+    <h2 class="section-title">Featured Games</h2>
     <div id="home-preview" class="preview-grid"></div>
   </div>
 </section>
 
 <section class="footer-cta">
   <div class="container">
-    <p>Have suggestions or want to advertise? Email <a href="mailto:usefulutilities.shop@gmail.com">usefulutilities.shop@gmail.com</a></p>
+    <p>Have suggestions, want to advertise, or request features? Email <a href="mailto:usefulutilities.shop@gmail.com">usefulutilities.shop@gmail.com</a></p>
+    <p>Our mission is to provide safe, engaging, and valuable tools for Roblox players everywhere.</p>
   </div>
 </section>
 </main>
@@ -82,7 +114,6 @@
 <footer class="site-footer">
   <div>© 2025 UsefulUtilities • Built by Nicholas • <a href="https://www.roblox.com/users/77313055/profile" target="_blank">Roblox</a></div>
 </footer>
-</div>
 
 <script src="script.js" defer></script>
 
@@ -115,10 +146,8 @@ onValue(gamesRef, snapshot => {
     card.className = 'game-preview card-3d tilt';
     card.onclick = () => window.open(game.url || '#', '_blank');
 
-    let imgSrc = game.img || '';
-    if (!imgSrc.startsWith('http')) {
-      imgSrc = `images/${imgSrc}`;
-    }
+    let imgSrc = game.img || 'images/Placeholder.png';
+    if (!imgSrc.startsWith('http')) imgSrc = `images/${imgSrc}`;
 
     card.innerHTML = `
       <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(game.name || '')}" />
@@ -137,7 +166,5 @@ function escapeHtml(s = '') {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 }
 </script>
-
 </body>
 </html>
-
