@@ -9,6 +9,17 @@
 <link rel="stylesheet" href="styles.css" />
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+<style>
+.search-bar { width: 100%; max-width: 420px; display: block; margin: 12px auto 20px; padding: 10px 12px; font-size: 1rem; border-radius: 8px; border: 1px solid rgba(255,255,255,0.06); background: rgba(10,10,10,0.6); color: #fff; outline: none; }
+#admin-box { max-width:920px; margin:14px auto 32px; padding:14px; border-radius:10px; background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.08)); border:1px solid rgba(255,255,255,0.02); display:none; }
+#admin-box input, #admin-box textarea, #admin-box button { width:100%; padding:8px 10px; margin:6px 0; border-radius:8px; border:1px solid rgba(255,255,255,0.04); background:transparent; color:#fff; }
+#admin-lock { max-width:420px; margin:10px auto 18px; display:flex; gap:8px; }
+#admin-lock input { flex:1; }
+#admin-msg { text-align:center; color:#ffd1c0; font-weight:600; margin-top:6px; }
+.admin-row { display:grid; grid-template-columns:1fr 160px; gap:8px; }
+@media (max-width:640px) { .admin-row { grid-template-columns:1fr; } }
+</style>
 </head>
 <body>
 <canvas id="particle-canvas" class="particle-canvas" aria-hidden="true"></canvas>
@@ -39,9 +50,30 @@
 </section>
 
 <section class="games-gallery container">
-  <div id="game-row" class="game-row">
-    <!-- Game cards will be injected here dynamically -->
+  <div id="search-root"></div>
+  <div id="game-row" class="game-row"></div>
+
+  <div id="admin-lock">
+    <input id="admin-pass" type="password" placeholder="Admin password" autocomplete="off" />
+    <button id="admin-unlock" class="btn btn-primary">Unlock</button>
   </div>
+  <div id="admin-msg" aria-live="polite"></div>
+
+  <div id="admin-box" aria-hidden="true">
+    <h3 style="margin-bottom:8px;color:#ffb36a;">Admin — Add Game</h3>
+    <div class="admin-row">
+      <input id="g-name" placeholder="Game name" />
+      <input id="g-img" type="file" accept="image/*" />
+    </div>
+    <input id="g-url" placeholder="Game URL (roblox link)" />
+    <textarea id="g-desc" rows="3" placeholder="Short description"></textarea>
+    <div style="display:flex; gap:8px; margin-top:8px;">
+      <button id="g-add" class="btn btn-primary">Add Game</button>
+      <button id="g-clear" class="btn btn-ghost">Clear</button>
+    </div>
+    <div id="admin-feedback" style="margin-top:10px;color:#cfeeea;"></div>
+  </div>
+
 </section>
 </main>
 
@@ -51,52 +83,148 @@
 </div>
 
 <script src="script.js" defer></script>
-<script>
-async function loadGames() {
-  const res = await fetch('gamelinks.txt');
-  const text = await res.text();
-  const lines = text.split('\n').filter(line => line.trim() && !line.startsWith('#'));
 
-  const games = lines.slice(1).map(line => {
-    const [name, url, img, desc] = line.split(',');
-    return { name: name.trim(), url: url.trim(), img: img.trim(), desc: desc.trim() };
-  });
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getDatabase, ref, push, onValue } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+import { getStorage, ref as sRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-storage.js";
 
-  const container = document.getElementById('game-row');
-  games.forEach(game => {
+const firebaseConfig = {
+  apiKey: "AIzaSyAkUvQQ8qZhSikmSJrsKMHmg6X6gU_gH3U",
+  authDomain: "usefulutilities-47455.firebaseapp.com",
+  databaseURL: "https://usefulutilities-47455-default-rtdb.firebaseio.com",
+  projectId: "usefulutilities-47455",
+  storageBucket: "usefulutilities-47455.appspot.com",
+  messagingSenderId: "911397695865",
+  appId: "1:911397695865:web:454d4df194d2d9295d7fa8"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const storage = getStorage(app);
+const gamesRefPath = 'games/';
+const container = document.getElementById('game-row');
+const searchRoot = document.getElementById('search-root');
+
+const searchInput = document.createElement('input');
+searchInput.className = 'search-bar';
+searchInput.placeholder = 'Search games...';
+searchRoot.appendChild(searchInput);
+
+let cachedData = {};
+const gamesRef = ref(db, gamesRefPath);
+onValue(gamesRef, snap => {
+  cachedData = snap.val() || {};
+  renderGames('');
+}, err => console.error('Firebase read error:', err));
+
+function renderGames(filter = '') {
+  const items = Object.values(cachedData || {});
+  container.innerHTML = '';
+  const filtered = items.filter(g => (g.name||'').toLowerCase().includes(filter.toLowerCase()));
+  filtered.forEach(game => {
     const card = document.createElement('div');
     card.className = 'game-card card-3d tilt';
-    card.onclick = () => window.open(game.url, '_blank');
+    const link = game.url || '#';
+    let imgSrc = game.img || '';
+    
+    // Use local images folder if the img doesn't look like a full URL
+    if (!imgSrc.startsWith('http')) {
+      imgSrc = `images/${imgSrc}`;
+    }
+
+    const desc = game.desc || '';
+    card.onclick = () => window.open(link, '_blank');
     card.innerHTML = `
       <div class="card-media">
-        <img src="images/${game.img}" alt="${game.name}" />
+        <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(game.name||'')}" />
       </div>
       <div class="card-body">
-        <h3>${game.name}</h3>
-        <p>${game.desc}</p>
+        <h3>${escapeHtml(game.name||'')}</h3>
+        <p>${escapeHtml(desc)}</p>
         <div class="card-actions">
-          <a class="btn-small" href="${game.url}" target="_blank">Play</a>
+          <a class="btn-small" href="${escapeHtml(link)}" target="_blank" rel="noopener">Play</a>
         </div>
       </div>
     `;
     container.appendChild(card);
   });
-
-  // Reinitialize tilt for dynamically added cards
-  if(window.initTilt) initTilt();
-
-  // Optionally animate cards with GSAP
-  if(window.gsap) {
+  if (window.gsap && window.initTilt) initTilt();
+  if (window.gsap) {
     gsap.utils.toArray('.game-card').forEach((el, i) => {
-      gsap.fromTo(el, { y: 28, opacity:0 }, {
-        y:0, opacity:1, duration: .9, ease:'power3.out', delay: i*0.06
-      });
+      gsap.fromTo(el, { y: 28, opacity:0 }, { y:0, opacity:1, duration:0.7, ease:'power3.out', delay:i*0.04 });
     });
   }
 }
 
-// Load games after DOM
-document.addEventListener('DOMContentLoaded', loadGames, { passive:true });
+
+
+searchInput.addEventListener('input', () => renderGames(searchInput.value.trim()));
+
+const ADMIN_PASSWORD = 'UUadmin2025';
+const adminPassInput = document.getElementById('admin-pass');
+const adminUnlockBtn = document.getElementById('admin-unlock');
+const adminBox = document.getElementById('admin-box');
+const adminMsg = document.getElementById('admin-msg');
+const adminFeedback = document.getElementById('admin-feedback');
+
+adminUnlockBtn.addEventListener('click', () => {
+  const val = adminPassInput.value || '';
+  if (val === ADMIN_PASSWORD) {
+    adminBox.style.display = 'block';
+    adminBox.setAttribute('aria-hidden','false');
+    adminMsg.textContent = 'Admin unlocked.';
+    adminPassInput.value = '';
+  } else {
+    adminMsg.textContent = 'Incorrect password.';
+    setTimeout(() => adminMsg.textContent = '', 1600);
+  }
+});
+
+const nameInput = document.getElementById('g-name');
+const imgInput = document.getElementById('g-img');
+const urlInput = document.getElementById('g-url');
+const descInput = document.getElementById('g-desc');
+const addBtn = document.getElementById('g-add');
+const clearBtn = document.getElementById('g-clear');
+
+addBtn.addEventListener('click', async () => {
+  const name = (nameInput.value || '').trim();
+  const url = (urlInput.value || '').trim();
+  const desc = (descInput.value || '').trim();
+  const file = imgInput.files[0];
+
+  if (!name || !url) {
+    adminFeedback.textContent = 'Name and URL required.';
+    return;
+  }
+
+  try {
+    let imgUrl = '';
+    if (file) {
+      const storageRef = sRef(storage, `game-images/${Date.now()}-${file.name}`);
+      await uploadBytes(storageRef, file);
+      imgUrl = await getDownloadURL(storageRef);
+    }
+
+    const payload = { name, url, img: imgUrl, desc };
+    await push(ref(db, gamesRefPath), payload);
+
+    adminFeedback.textContent = 'Game added.';
+    nameInput.value = urlInput.value = descInput.value = '';
+    imgInput.value = '';
+    setTimeout(() => adminFeedback.textContent = '', 1800);
+  } catch(e) {
+    console.error('Write failed', e);
+    adminFeedback.textContent = 'Failed to add. Check console.';
+  }
+});
+
+clearBtn.addEventListener('click', () => {
+  nameInput.value = imgInput.value = urlInput.value = descInput.value = '';
+});
+
+function escapeHtml(s = '') { return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]); }
 </script>
 </body>
 </html>

@@ -1,8 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4769500979580060"
-     crossorigin="anonymous"></script>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width,initial-scale=1" />
 <title>UsefulUtilities — Home</title>
@@ -68,9 +66,7 @@
 <section class="preview">
   <div class="container">
     <h2 class="section-title">Games</h2>
-    <div id="home-preview" class="preview-grid">
-      <!-- Preview cards dynamically loaded -->
-    </div>
+    <div id="home-preview" class="preview-grid"></div>
   </div>
 </section>
 
@@ -86,36 +82,60 @@
 </footer>
 </div>
 
-<script>
-async function loadPreviewGames() {
-  const container = document.getElementById('home-preview');
-  try {
-    const response = await fetch('gamelinks.txt');
-    const text = await response.text();
-    const lines = text.split('\n').filter(line => line.trim() !== '');
-    // Show only first 3 games as preview
-    lines.slice(0,3).forEach(line => {
-      const [name, url, img, desc] = line.split(',');
-      const card = document.createElement('div');
-      card.className = 'game-preview card-3d tilt';
-      card.onclick = () => window.open(url,'_blank');
-      card.innerHTML = `
-        <img src="images/${img}" alt="${name}" />
-        <div class="preview-meta">
-          <h3>${name}</h3>
-          <p>${desc}</p>
-        </div>
-      `;
-      container.appendChild(card);
-    });
-    if(window.gsap) initTilt();
-  } catch(e) {
-    console.error('Failed to load preview games:', e);
-  }
-}
-document.addEventListener('DOMContentLoaded', loadPreviewGames);
-</script>
 <script src="script.js" defer></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-app.js";
+import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/12.3.0/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyAkUvQQ8qZhSikmSJrsKMHmg6X6gU_gH3U",
+  authDomain: "usefulutilities-47455.firebaseapp.com",
+  databaseURL: "https://usefulutilities-47455-default-rtdb.firebaseio.com",
+  projectId: "usefulutilities-47455",
+  storageBucket: "usefulutilities-47455.appspot.com",
+  messagingSenderId: "911397695865",
+  appId: "1:911397695865:web:454d4df194d2d9295d7fa8"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+const previewContainer = document.getElementById('home-preview');
+
+const gamesRef = ref(db, 'games/');
+onValue(gamesRef, snapshot => {
+  const data = snapshot.val() || {};
+  previewContainer.innerHTML = '';
+  const games = Object.values(data);
+
+  games.slice(0,3).forEach(game => {
+    const card = document.createElement('div');
+    card.className = 'game-preview card-3d tilt';
+    card.onclick = () => window.open(game.url || '#', '_blank');
+
+    let imgSrc = game.img || '';
+    if (!imgSrc.startsWith('http')) {
+      imgSrc = `images/${imgSrc}`;
+    }
+
+    card.innerHTML = `
+      <img src="${escapeHtml(imgSrc)}" alt="${escapeHtml(game.name || '')}" />
+      <div class="preview-meta">
+        <h3>${escapeHtml(game.name || '')}</h3>
+        <p>${escapeHtml(game.desc || '')}</p>
+      </div>
+    `;
+    previewContainer.appendChild(card);
+  });
+
+  if (window.gsap && window.initTilt) initTilt();
+}, err => console.error('Firebase read failed:', err));
+
+function escapeHtml(s = '') {
+  return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
+}
+</script>
+
 </body>
 </html>
 
