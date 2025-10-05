@@ -1,0 +1,4 @@
+Game Name,Roblox Game URL,Image Filename,Description
+Murderers VS Sheriffs,https://www.roblox.com/games/12355337193/Murderers-VS-Sheriffs-DUELS,MVSD.png,Fast duels: Murderers vs Sheriffs
+Sols RNG Test,https://www.roblox.com/games/15532962292/Sols-RNG-Test-Your-Luck,Sols.png,Test your luck in Sols RNG
+Blade Ball,https://www.roblox.com/games/13772394625/Blade-Ball,BladeBall.png,Competitive blade-throwing fun

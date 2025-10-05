@@ -1,59 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4769500979580060"
-     crossorigin="anonymous"></script>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>UsefulUtilities — About</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>UsefulUtilities — About</title>
+<link rel="stylesheet" href="styles.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
-  <canvas id="particle-canvas" class="particle-canvas" aria-hidden="true"></canvas>
+<canvas id="particle-canvas" class="particle-canvas" aria-hidden="true"></canvas>
 
-  <div id="ui" class="ui">
-    <header class="topbar">
-      <div class="brand">
-        <img src="images/robloxav.png" alt="avatar" class="avatar" />
-        <div class="brand-text">
-          <div class="brand-title">UsefulUtilities</div>
-          <div class="brand-sub">Nicholas — Oshawa</div>
+<div id="ui" class="ui">
+<header class="topbar">
+  <div class="brand">
+    <img src="images/robloxav.png" alt="avatar" class="avatar" />
+    <div class="brand-text">
+      <div class="brand-title">UsefulUtilities</div>
+      <div class="brand-sub">Nicholas — Oshawa</div>
+    </div>
+  </div>
+  <nav class="nav">
+    <a href="index.html" class="nav-link">Home</a>
+    <a href="games.html" class="nav-link">Games</a>
+    <a href="about.html" class="nav-link active">About</a>
+    <a href="legal.html" class="nav-link">Legal</a>
+  </nav>
+</header>
+
+<main>
+<section class="about-page">
+  <div class="container">
+    <h2 class="section-title">About Nicholas</h2>
+    <div class="about-card card-3d tilt">
+      <div class="about-inner" style="display:flex; align-items:center; gap:20px; flex-wrap:wrap;">
+        <img src="images/robloxav.png" alt="Nicholas Avatar" class="about-avatar" />
+        <div class="about-content">
+          <p>Hello! I'm <strong>Nicholas</strong>, 16, Toronto-born and now living in Oshawa. I create Roblox games and tools designed to help people have fun, learn, and explore new experiences.</p>
+          <p>My goal is to build tools and games that genuinely help the community and bring people together.</p>
+          <p>Email for suggestions or advertising: <a href="mailto:usefulutilities.shop@gmail.com">usefulutilities.shop@gmail.com</a></p>
+          <p><a href="https://www.roblox.com/users/77313055/profile" target="_blank" rel="noopener noreferrer">Follow on Roblox</a></p>
         </div>
       </div>
-
-      <nav class="nav">
-        <a href="index.html" class="nav-link">Home</a>
-        <a href="games.html" class="nav-link">Games</a>
-        <a href="about.html" class="nav-link active">About</a>
-        <a href="legal.html" class="nav-link">Legal</a>
-      </nav>
-    </header>
-
-    <main>
-      <section class="about-page">
-        <div class="container">
-          <h1 class="section-title">About Nicholas</h1>
-          <div class="about-card card-3d">
-            <div class="about-inner">
-              <img src="images/robloxav.png" alt="Nicholas" class="about-avatar" />
-              <div class="about-content">
-                <p><strong>Nicholas</strong>, 16. Toronto-born. Living in Oshawa. I make Roblox games and build things that make people happy.</p>
-                <p>Email for suggestions or advertising: <a href="mailto:usefulutilities.shop@gmail.com">usefulutilities.shop@gmail.com</a></p>
-                <p><a href="https://www.roblox.com/users/77313055/profile" target="_blank">Follow on Roblox</a></p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div>© 2025 UsefulUtilities • Built by Nicholas</div>
-    </footer>
+    </div>
   </div>
+</section>
+</main>
 
-  <script src="script.js" defer></script>
+<footer class="site-footer">
+  <div>© 2025 UsefulUtilities • Built by Nicholas</div>
+</footer>
+</div>
+
+<script src="script.js" defer></script>
+<script>
+  // Initialize tilt on About card
+  document.addEventListener('DOMContentLoaded', () => {
+    if(window.initTilt) initTilt();
+  });
+</script>
 </body>
 </html>

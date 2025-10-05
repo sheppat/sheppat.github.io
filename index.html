@@ -1,114 +1,119 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-4769500979580060"
-     crossorigin="anonymous"></script>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>UsefulUtilities — Home</title>
-  <link rel="stylesheet" href="styles.css" />
-  <!-- GSAP + ScrollTrigger -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>UsefulUtilities — Home</title>
+<link rel="stylesheet" href="styles.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
 </head>
 <body>
-  <!-- Particle canvas sits behind everything -->
-  <canvas id="particle-canvas" class="particle-canvas" aria-hidden="true"></canvas>
+<canvas id="particle-canvas" class="particle-canvas" aria-hidden="true"></canvas>
 
-  <div id="ui" class="ui">
-    <header class="topbar">
-      <div class="brand">
-        <img src="images/robloxav.png" alt="avatar" class="avatar" />
-        <div class="brand-text">
-          <div class="brand-title">UsefulUtilities</div>
-          <div class="brand-sub">Nicholas — Oshawa, Canada</div>
-        </div>
-      </div>
-
-      <nav class="nav">
-        <a href="index.html" class="nav-link active">Home</a>
-        <a href="games.html" class="nav-link">Games</a>
-        <a href="about.html" class="nav-link">About</a>
-        <a href="legal.html" class="nav-link">Legal</a>
-      </nav>
-    </header>
-
-    <main>
-      <section class="hero cinematic">
-        <div class="hero-inner">
-          <img src="images/swordwarriorslogo.png" alt="Sword Warriors" class="hero-logo" />
-          <h1 class="hero-title">Invite. Eliminate. Repeat.</h1>
-          <p class="hero-sub">Sword Warriors 1v1 — fast duels, razor precision, endless grind.</p>
-          <div class="hero-cta">
-            <a class="btn btn-primary" href="games.html">Enter the Arena</a>
-            <a class="btn btn-ghost" href="https://www.roblox.com/users/77313055/profile" target="_blank">Follow on Roblox</a>
-          </div>
-        </div>
-
-        <!-- neon depth layers -->
-        <div class="neon-layer neon-1" aria-hidden="true"></div>
-        <div class="neon-layer neon-2" aria-hidden="true"></div>
-        <div class="neon-layer neon-3" aria-hidden="true"></div>
-      </section>
-
-      <section class="features">
-        <div class="container">
-          <h2 class="section-title">UsefulUtilities Studio</h2>
-          <div class="feature-grid">
-            <article class="feature-card tilt">
-              <h3>Polished 1v1</h3>
-              <p>Fast matches. Clean code. Competitive balance.</p>
-            </article>
-
-            <article class="feature-card tilt">
-              <h3>Studio Mindset</h3>
-              <p>Iterate fast. Ship improvements. Listen to players.</p>
-            </article>
-
-            <article class="feature-card tilt">
-              <h3>Community First</h3>
-              <p>Support, suggestions, advertising via email.</p>
-            </article>
-          </div>
-        </div>
-      </section>
-
-      <section class="preview">
-        <div class="container">
-          <h2 class="section-title">Games</h2>
-          <div class="preview-grid">
-            <div class="game-preview card-3d tilt" onclick="location.href='games.html'">
-              <img src="images/swordwarriorslogo.png" alt="Sword Warriors" />
-              <div class="preview-meta">
-                <h3>Sword Warriors 1v1</h3>
-                <p>Invite > Accept > Teleport > Eliminate.</p>
-              </div>
-            </div>
-
-            <div class="game-preview card-3d coming-soon">
-              <img src="https://via.placeholder.com/720x400/111/222?text=Coming+Soon" alt="coming" />
-              <div class="preview-meta">
-                <h3>Next Project</h3>
-                <p>Under development — stay tuned.</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <section class="footer-cta">
-        <div class="container">
-          <p>Have suggestions or want to advertise? Email <a href="mailto:usefulutilities.shop@gmail.com">usefulutilities.shop@gmail.com</a></p>
-        </div>
-      </section>
-    </main>
-
-    <footer class="site-footer">
-      <div>© 2025 UsefulUtilities • Built by Nicholas • <a href="https://www.roblox.com/users/77313055/profile" target="_blank">Roblox</a></div>
-    </footer>
+<div id="ui" class="ui">
+<header class="topbar">
+  <div class="brand">
+    <img src="images/robloxav.png" alt="avatar" class="avatar" />
+    <div class="brand-text">
+      <div class="brand-title">UsefulUtilities</div>
+      <div class="brand-sub">Nicholas — Oshawa, Canada</div>
+    </div>
   </div>
+  <nav class="nav">
+    <a href="index.html" class="nav-link active">Home</a>
+    <a href="games.html" class="nav-link">Games</a>
+    <a href="about.html" class="nav-link">About</a>
+    <a href="legal.html" class="nav-link">Legal</a>
+  </nav>
+</header>
 
-  <script src="script.js" defer></script>
+<main>
+<section class="hero cinematic">
+  <div class="hero-inner">
+    <h1 class="hero-title">Explore. Play. Enjoy.</h1>
+    <p class="hero-sub">UsefulUtilities brings you fun Roblox experiences and stats-driven tools for players.</p>
+    <div class="hero-cta">
+      <a class="btn btn-primary" href="games.html">View Games</a>
+      <a class="btn btn-ghost" href="https://www.roblox.com/users/77313055/profile" target="_blank">Follow on Roblox</a>
+    </div>
+  </div>
+  <div class="neon-layer neon-1" aria-hidden="true"></div>
+  <div class="neon-layer neon-2" aria-hidden="true"></div>
+  <div class="neon-layer neon-3" aria-hidden="true"></div>
+</section>
+
+<section class="features">
+  <div class="container">
+    <h2 class="section-title">Our Studio</h2>
+    <div class="feature-grid">
+      <article class="feature-card tilt">
+        <h3>Dynamic Games</h3>
+        <p>New experiences added frequently. Explore, play, and enjoy multiple Roblox games.</p>
+      </article>
+      <article class="feature-card tilt">
+        <h3>Community Focus</h3>
+        <p>Feedback-driven development. We build tools and games to help the community thrive.</p>
+      </article>
+      <article class="feature-card tilt">
+        <h3>SSO & Stats</h3>
+        <p>Track stats and analytics for your favorite Roblox games seamlessly.</p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="preview">
+  <div class="container">
+    <h2 class="section-title">Games</h2>
+    <div id="home-preview" class="preview-grid">
+      <!-- Preview cards dynamically loaded -->
+    </div>
+  </div>
+</section>
+
+<section class="footer-cta">
+  <div class="container">
+    <p>Have suggestions or want to advertise? Email <a href="mailto:usefulutilities.shop@gmail.com">usefulutilities.shop@gmail.com</a></p>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer">
+  <div>© 2025 UsefulUtilities • Built by Nicholas • <a href="https://www.roblox.com/users/77313055/profile" target="_blank">Roblox</a></div>
+</footer>
+</div>
+
+<script>
+async function loadPreviewGames() {
+  const container = document.getElementById('home-preview');
+  try {
+    const response = await fetch('gamelinks.txt');
+    const text = await response.text();
+    const lines = text.split('\n').filter(line => line.trim() !== '');
+    // Show only first 3 games as preview
+    lines.slice(0,3).forEach(line => {
+      const [name, url, img, desc] = line.split(',');
+      const card = document.createElement('div');
+      card.className = 'game-preview card-3d tilt';
+      card.onclick = () => window.open(url,'_blank');
+      card.innerHTML = `
+        <img src="images/${img}" alt="${name}" />
+        <div class="preview-meta">
+          <h3>${name}</h3>
+          <p>${desc}</p>
+        </div>
+      `;
+      container.appendChild(card);
+    });
+    if(window.gsap) initTilt();
+  } catch(e) {
+    console.error('Failed to load preview games:', e);
+  }
+}
+document.addEventListener('DOMContentLoaded', loadPreviewGames);
+</script>
+<script src="script.js" defer></script>
 </body>
 </html>
 
